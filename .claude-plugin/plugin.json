@@ -1,0 +1,9 @@
+{
+  "name": "claudify",
+  "version": "0.1.0",
+  "description": "Claudify your CLI.",
+  "types": "./types/index.d.ts",
+  "author": {
+    "name": "ibizabroker"
+  }
+}
