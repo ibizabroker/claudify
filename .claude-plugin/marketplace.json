@@ -1,5 +1,13 @@
 {
   "name": "claudify",
-  "owner": { "name": "ibizabroker" },
-  "plugins": [{ "name": "claudify", "source": "./" }]
+  "description": "A Claude Code status line with model, effort, context, folder and git branch.",
+  "owner": {
+    "name": "ibizabroker"
+  },
+  "plugins": [
+    {
+      "name": "claudify",
+      "source": "./"
+    }
+  ]
 }
