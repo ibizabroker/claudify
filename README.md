@@ -1,4 +1,4 @@
-# claudify
+# <img src=".claude-plugin/icon.png" alt="" width="40" align="top"> claudify
 
 A Claude Code mod that adds a status line under the prompt, in the same dim style as the
 mode hint above it:
