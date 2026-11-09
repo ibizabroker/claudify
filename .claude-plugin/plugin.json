@@ -1,12 +1,13 @@
 {
   "name": "claudify",
-  "displayName": "Tarun Gowda",
-  "version": "0.1.1",
+  "displayName": "claudify",
+  "version": "0.1.2",
   "description": "Claudify your CLI.",
   "types": "./types/index.d.ts",
   "icon": "./.claude-plugin/icon.png",
   "author": {
-    "name": "ibizabroker"
+    "name": "Tarun Gowda",
+    "url": "https://github.com/ibizabroker"
   },
   "homepage": "https://github.com/ibizabroker/claudify",
   "repository": "https://github.com/ibizabroker/claudify",
