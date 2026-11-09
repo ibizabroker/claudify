@@ -161,6 +161,7 @@ export const register: Register = on => {
   on('session.measure', ($, e, next) => redrawAfter($, next(e)))
   on('turn.complete', ($, e, next) => redrawAfter($, next(e)))
   on('classic.PostModelSwitch', ($, e, next) => redrawWithSavedEffort($, next(e), { model: e.to_model }))
+    .catch(($, e, next) => next(e))
 
   on('command.run', { command: 'effort' }, async ($, e, next) => {
     const named = e.args.trim().toLowerCase()
@@ -171,9 +172,10 @@ export const register: Register = on => {
     }
 
     return redrawAfterPicker($, () => next(e))
-  })
+  }).catch(($, e, next) => next(e))
 
   on('command.run', { command: 'model' }, ($, e, next) => redrawAfterPicker($, () => next(e)))
+    .catch(($, e, next) => next(e))
 
   on('turn.step', async function* ($, e, next) {
     const sent = e.agentId === undefined && e.effort !== undefined ? String(e.effort) : effort
@@ -187,6 +189,6 @@ export const register: Register = on => {
   on('classic.SessionStart', ($, e, next) => {
     resumedTokens = e.source === 'resume' || e.source === 'fork' ? e.context_tokens : undefined
     return redrawAfter($, next(e))
-  })
-  on('classic.CwdChanged', ($, e, next) => redrawAfter($, next(e)))
+  }).catch(($, e, next) => next(e))
+  on('classic.CwdChanged', ($, e, next) => redrawAfter($, next(e))).catch(($, e, next) => next(e))
 }

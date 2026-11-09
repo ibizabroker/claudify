@@ -8,6 +8,18 @@ mode hint above it:
   Opus 5.5 (medium) · (4.95%) 49.5k / 1M · ~/Projects/claudify · main
 ```
 
+## What it reads and runs
+
+claudify works only on your machine and sends nothing anywhere. To draw the line it:
+
+- asks the session for its model, context usage, working folder and transcript;
+- reads `~/.claude/settings.json` (or `$CLAUDE_CONFIG_DIR/settings.json`) for the
+  effort level saved for the current model;
+- runs `git branch --show-current`, and `git rev-parse --short HEAD` on a detached
+  HEAD, in the working folder when it is a git repository.
+
+It writes no files and changes no settings.
+
 ## Install
 
 At the prompt of a Claude Code terminal session:
