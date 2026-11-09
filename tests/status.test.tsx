@@ -2,14 +2,14 @@ import type { On, SessionRepo, SessionUsage, TurnStepResult } from 'claude-code'
 import type { Engine } from 'claude-code/testing'
 import { expect, mock, test } from 'claude-code/testing'
 
-import { formatLine, formatTokens, modelName, tildify } from '../hooks/register.tsx'
+import { formatLine, formatCount, modelName, tildify } from '../hooks/register.tsx'
 
 test('tokens are written the way the status line reads them', () => {
-  expect(formatTokens(0)).toBe('0')
-  expect(formatTokens(999)).toBe('999')
-  expect(formatTokens(134_400)).toBe('134.4k')
-  expect(formatTokens(200_000)).toBe('200k')
-  expect(formatTokens(1_000_000)).toBe('1M')
+  expect(formatCount(0)).toBe('0')
+  expect(formatCount(999)).toBe('999')
+  expect(formatCount(134_400)).toBe('134.4k')
+  expect(formatCount(200_000)).toBe('200k')
+  expect(formatCount(1_000_000)).toBe('1M')
 })
 
 test('a model id reads as its name', () => {

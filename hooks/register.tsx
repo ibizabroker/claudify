@@ -15,7 +15,7 @@ export type Line = {
   window: number
 }
 
-export function formatTokens(n: number): string {
+export function formatCount(n: number): string {
   if (n >= 1_000_000) return `${trim(n / 1_000_000)}M`
   if (n >= 1_000) return `${trim(n / 1_000)}k`
   return String(n)
@@ -42,7 +42,7 @@ export function tildify(path: string, home: string | undefined): string {
 export function formatLine(line: Line): string {
   const tokens = line.tokens ?? 0
   const percent = (line.window > 0 ? (tokens / line.window) * 100 : 0).toFixed(2)
-  const context = `(${percent}%) ${formatTokens(tokens)} / ${formatTokens(line.window)}`
+  const context = `(${percent}%) ${formatCount(tokens)} / ${formatCount(line.window)}`
 
   const model = line.effort ? `${modelName(line.model)} (${line.effort})` : modelName(line.model)
 
@@ -70,7 +70,7 @@ async function savedEffort($: EngineInterface, model: string): Promise<string | 
   }
 }
 
-let resumedTokens: number | undefined
+let resumedFill: number | undefined
 
 async function refresh($: EngineInterface, known: Known = {}) {
   const id = ++latest
@@ -84,7 +84,7 @@ async function refresh($: EngineInterface, known: Known = {}) {
 
   if (id !== latest) return
 
-  const tokens = usage.context.tokens ?? resumedTokens
+  const tokens = usage.context.tokens ?? resumedFill
   const text = formatLine({ model, effort, cwd, home, branch, tokens, window: usage.context.window })
   await update($, line, () => text)
 }
@@ -186,9 +186,10 @@ export const register: Register = on => {
     return yield* next(e)
   })
 
-  on('classic.SessionStart', ($, e, next) => {
-    resumedTokens = e.source === 'resume' || e.source === 'fork' ? e.context_tokens : undefined
-    return redrawAfter($, next(e))
+  on('classic.SessionStart', async ($, e, next) => {
+    resumedFill = e.source === 'resume' || e.source === 'fork' ? e.context_tokens : undefined
+    await refresh($)
+    return next(e)
   }).catch(($, e, next) => next(e))
   on('classic.CwdChanged', ($, e, next) => redrawAfter($, next(e))).catch(($, e, next) => next(e))
 }

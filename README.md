@@ -16,9 +16,15 @@ claudify works only on your machine and sends nothing anywhere. To draw the line
 - reads `~/.claude/settings.json` (or `$CLAUDE_CONFIG_DIR/settings.json`) for the
   effort level saved for the current model;
 - runs `git branch --show-current`, and `git rev-parse --short HEAD` on a detached
-  HEAD, in the working folder when it is a git repository.
+  HEAD, in the working folder when it is a git repository, to name the branch.
 
-It writes no files and changes no settings.
+These two git commands are the only programs it runs. Both are fixed text; only the
+folder they run in comes from the session. Neither talks to a remote, and claudify
+passes them nothing it read from the settings file or the conversation.
+
+What it reads goes to one place: the dim line under the prompt. It sends nothing off
+the machine, makes no network calls, writes no files, changes no settings and makes
+no permission decisions.
 
 ## Install
 
